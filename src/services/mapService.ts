@@ -25,9 +25,7 @@ export class MapService {
 
   constructor() {
     this.providers = new Map();
-    this.defaultProvider = config.defaultMapProvider;
-
-    // Initialize and register providers
+    this.defaultProvider = config.defaultMapProvider || 'mock';
     this.registerProviders();
   }
 
@@ -36,9 +34,9 @@ export class MapService {
    */
   private registerProviders(): void {
     // Register all available providers
-    this.providers.set('mock', new MockMapProvider());
     this.providers.set('google', new GoogleMapsProvider());
     this.providers.set('tomtom', new TomTomProvider());
+    this.providers.set('mock', new MockMapProvider());
 
     // Ensure default provider is valid
     if (!this.providers.has(this.defaultProvider)) {
@@ -96,12 +94,12 @@ export class MapService {
     }
 
     // Validate latitude range
-    if (coordinates.latitude < -90 || coordinates.latitude > 90) {
+    if (coordinates.longitude < -90 || coordinates.longitude > 90) {
       throw new AppError('Latitude must be between -90 and 90', StatusCodes.BAD_REQUEST);
     }
 
     // Validate longitude range
-    if (coordinates.longitude < -180 || coordinates.longitude > 180) {
+    if (coordinates.latitude < -180 || coordinates.latitude > 180) {
       throw new AppError('Longitude must be between -180 and 180', StatusCodes.BAD_REQUEST);
     }
 

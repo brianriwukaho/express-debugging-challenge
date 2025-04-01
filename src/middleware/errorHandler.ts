@@ -11,12 +11,15 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction,
 ): void => {
-  // Default status code
   let statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
+  let message = 'Internal server error';
 
-  // Check if it's our own app error
   if (err instanceof AppError) {
     statusCode = err.statusCode;
+    message = err.message;
+  } else if (err instanceof SyntaxError) {
+    statusCode = StatusCodes.BAD_REQUEST;
+    message = 'Invalid JSON';
   }
 
   // Log the error
@@ -25,8 +28,6 @@ export const errorHandler = (
   // Send error response
   res.status(statusCode).json({
     status: 'error',
-    statusCode,
-    message: err.message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
+    message: message,
   });
-};
+}

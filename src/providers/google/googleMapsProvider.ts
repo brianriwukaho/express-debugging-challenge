@@ -22,13 +22,8 @@ export class GoogleMapsProvider implements MapProvider {
     console.log('GoogleMapsProvider initialized (using mock implementation)');
   }
 
-  /**
-   * Convert an address to coordinates using Google Geocoding API
-   */
   public async geocode(address: string): Promise<GeocodingResponse> {
     console.log(`[GoogleMapsProvider] Geocoding address: ${address} (using mock)`);
-
-    // Use the mock provider but change the provider ID
     const result = await this.mockProvider.geocode(address);
     return {
       ...result,
@@ -36,13 +31,8 @@ export class GoogleMapsProvider implements MapProvider {
     };
   }
 
-  /**
-   * Convert coordinates to address using Google Reverse Geocoding API
-   */
   public async reverseGeocode(coordinates: Coordinates): Promise<ReverseGeocodingResponse> {
     console.log(`[GoogleMapsProvider] Reverse geocoding coordinates (using mock)`);
-
-    // Use the mock provider but change the provider ID
     const result = await this.mockProvider.reverseGeocode(coordinates);
     return {
       ...result,
@@ -50,16 +40,11 @@ export class GoogleMapsProvider implements MapProvider {
     };
   }
 
-  /**
-   * Calculate distance between two points using Google Distance Matrix API
-   */
   public async calculateDistance(
     origin: Coordinates,
     destination: Coordinates,
   ): Promise<DistanceResponse> {
     console.log(`[GoogleMapsProvider] Calculating distance (using mock)`);
-
-    // Use the mock provider but change the provider ID
     const result = await this.mockProvider.calculateDistance(origin, destination);
     return {
       ...result,

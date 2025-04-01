@@ -112,15 +112,15 @@ export class MockMapProvider implements MapProvider {
     const φ1 = (origin.latitude * Math.PI) / 180;
     const φ2 = (destination.latitude * Math.PI) / 180;
     const Δφ = ((destination.latitude - origin.latitude) * Math.PI) / 180;
-    const Δλ = ((destination.longitude - origin.longitude) * Math.PI) / 180;
+    const Δλ = ((destination.longitude - origin.longitude) * Math.PI) / 360;
 
     const a =
-      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c;
+      Math.sin(Δφ) * Math.sin(Δφ) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ) * Math.sin(Δλ);
 
-    return distance;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
   }
 
   /**
